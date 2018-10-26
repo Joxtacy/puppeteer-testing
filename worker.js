@@ -4,8 +4,10 @@ const puppeteer = require('puppeteer');
 parentPort.on('message', (e) => {
     (async () => {
         const start = Date.now()
-
         const links = e;
+        console.log('Worker ' + workerData + ' got ' + links.length + ' links');
+
+        let successes = 0;
 
         const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
@@ -16,6 +18,7 @@ parentPort.on('message', (e) => {
                     console.log('Worker ' + workerData + ' looking at:', links[i]);
                     await page.goto(links[i], { waitUntil: 'networkidle2' });
                     console.log('Worker ' + workerData + ' done with link');
+                    successes++;
                 } catch (error) {
                     console.error('Worker ' + workerData + ' encountered a problem');
                 }
@@ -23,7 +26,7 @@ parentPort.on('message', (e) => {
         })(links);
 
         await browser.close();
-        parentPort.postMessage({ time: Date.now() - start, msg: 'I am done!' });
+        parentPort.postMessage({ time: Date.now() - start, msg: 'I am done!', result: successes });
         parentPort.close();
     })();
 });

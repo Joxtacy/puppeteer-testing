@@ -3,6 +3,7 @@ const { Worker, workerData } = require('worker_threads');
 
 const workers = [];
 
+let successes = 0;
 // only for reducing number of links when testing stuff
 links.splice(0, links.length - 23);
 
@@ -19,6 +20,8 @@ for (let i = 1; i <= numberOfWorkers; i++) {
 
     myWorker.on('message', (e) => {
         console.log('Received message from worker ' + i, e);
+        successes = successes + e.result;
+        console.log('Total successes', successes);
     });
 
     let linksToGoTo = links.splice(0, spliceEnd);
