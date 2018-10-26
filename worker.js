@@ -15,7 +15,7 @@ parentPort.on('message', (e) => {
                 try {
                     console.log('Worker ' + workerData + ' looking at:', links[i]);
                     await page.goto(links[i], { waitUntil: 'networkidle2' });
-                    console.log('Worker ' + workerData + ' done with:', links[i]);
+                    console.log('Worker ' + workerData + ' done with link');
                 } catch (error) {
                     console.error('Worker ' + workerData + ' encountered a problem');
                 }
