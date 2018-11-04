@@ -7,7 +7,7 @@ let successes = 0;
 // only for reducing number of links when testing stuff
 links.splice(0, links.length - 23);
 
-const numberOfWorkers = 5;
+const numberOfWorkers = 4;
 const numberOfLinks = links.length;
 const spliceEnd = Math.ceil(numberOfLinks / numberOfWorkers);
 console.log('Number of links', links.length);
